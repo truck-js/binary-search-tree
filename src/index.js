@@ -20,30 +20,27 @@ class BinarySearchTree {
     return this.left ? this.left.minimum : this.value;
   }
 
-  delete(value, parent = undefined, comparator = defaultComparator) {
+  delete(value, comparator = defaultComparator, parent = undefined) {
     const difference = comparator(this.value, value);
     if (difference === 1) {
-      return this.right ? this.right.delete(value, this, comparator) : false;
+      return this.right ? this.right.delete(value, comparator, this) : false;
     }
     if (difference === -1) {
-      return this.left ? this.left.delete(value, this, comparator) : false;
+      return this.left ? this.left.delete(value, comparator, this) : false;
     }
-    if (difference === 0) {
-      if (this.left && this.right) {
-        this.value = this.right.minimum;
-        return this.right.delete(this.value, this, comparator);
-      }
-      if (parent.left === this) {
-        // eslint-disable-next-line no-param-reassign
-        parent.left = this.left ? this.left : this.right;
-      }
-      if (parent.right === this) {
-        // eslint-disable-next-line no-param-reassign
-        parent.right = this.left ? this.left : this.right;
-      }
-      return true;
+    if (this.left && this.right) {
+      this.value = this.right.minimum;
+      return this.right.delete(this.value, comparator, this);
     }
-    return false;
+    if (parent.left === this) {
+      // eslint-disable-next-line no-param-reassign
+      parent.left = this.left ? this.left : this.right;
+    }
+    if (parent.right === this) {
+      // eslint-disable-next-line no-param-reassign
+      parent.right = this.left ? this.left : this.right;
+    }
+    return true;
   }
 
   insert(value, comparator = defaultComparator) {
