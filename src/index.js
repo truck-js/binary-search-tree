@@ -1,3 +1,6 @@
+import Queue from '@truck/queue';
+// import isFunction from 'lodash.isfunction';
+
 const defaultComparator = (existing, value) => {
   if (value > existing) {
     return 1;
@@ -58,6 +61,55 @@ class BinarySearchTree {
         this.left = new BinarySearchTree(value);
       }
     }
+  }
+
+  traverseBreadthFirst(callback) {
+    const queue = new Queue();
+    queue.enqueue(this);
+    while (!queue.isEmpty()) {
+      const item = queue.dequeue();
+      const { left, right } = item;
+      callback(item);
+      if (left) {
+        queue.enqueue(left);
+      }
+      if (right) {
+        queue.enqueue(right);
+      }
+    }
+  }
+
+  traverseDepthFirstPreOrder(callback) {
+    const { left, right } = this;
+    callback(this);
+    if (left) {
+      left.traverseDepthFirstPreOrder(callback);
+    }
+    if (right) {
+      right.traverseDepthFirstPreOrder(callback);
+    }
+  }
+
+  traverseDepthFirstInOrder(callback) {
+    const { left, right } = this;
+    if (left) {
+      left.traverseDepthFirstInOrder(callback);
+    }
+    callback(this);
+    if (right) {
+      right.traverseDepthFirstInOrder(callback);
+    }
+  }
+
+  traverseDepthFirstPostOrder(callback) {
+    const { left, right } = this;
+    if (left) {
+      left.traverseDepthFirstPostOrder(callback);
+    }
+    if (right) {
+      right.traverseDepthFirstPostOrder(callback);
+    }
+    callback(this);
   }
 }
 
