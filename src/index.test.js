@@ -424,29 +424,6 @@ describe('.traverseBreadthFirst()', () => {
   });
 });
 
-describe('.traverseDepthFirstPreOrder()', () => {
-  const results = [];
-  const callback = node => results.push(node.value);
-
-  let binarySearchTree;
-
-  beforeAll(() => {
-    binarySearchTree = new BinarySearchTree(10);
-    binarySearchTree.insert(5);
-    binarySearchTree.insert(3);
-    binarySearchTree.insert(7);
-    binarySearchTree.insert(15);
-    binarySearchTree.insert(13);
-    binarySearchTree.insert(17);
-    binarySearchTree.insert(17);
-    binarySearchTree.traverseDepthFirstPreOrder(callback);
-  });
-
-  test('Calls the callback in the correct order', () => {
-    expect(results).toEqual([10, 5, 3, 7, 15, 13, 17]);
-  });
-});
-
 describe('.traverseDepthFirstInOrder()', () => {
   const results = [];
   const callback = node => results.push(node.value);
@@ -490,5 +467,28 @@ describe('.traverseDepthFirstPostOrder()', () => {
 
   test('Calls the callback in the correct order', () => {
     expect(results).toEqual([3, 7, 5, 13, 17, 15, 10]);
+  });
+});
+
+describe('.traverseDepthFirstPreOrder()', () => {
+  const results = [];
+  const callback = node => results.push(node.value);
+
+  let binarySearchTree;
+
+  beforeAll(() => {
+    binarySearchTree = new BinarySearchTree(10);
+    binarySearchTree.insert(5);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(15);
+    binarySearchTree.insert(13);
+    binarySearchTree.insert(17);
+    binarySearchTree.insert(17);
+    binarySearchTree.traverseDepthFirstPreOrder(callback);
+  });
+
+  test('Calls the callback in the correct order', () => {
+    expect(results).toEqual([10, 5, 3, 7, 15, 13, 17]);
   });
 });

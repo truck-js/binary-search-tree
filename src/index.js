@@ -92,17 +92,6 @@ class BinarySearchTree {
     }
   }
 
-  traverseDepthFirstPreOrder(callback) {
-    const { left, right } = this;
-    callback(this);
-    if (left) {
-      left.traverseDepthFirstPreOrder(callback);
-    }
-    if (right) {
-      right.traverseDepthFirstPreOrder(callback);
-    }
-  }
-
   traverseDepthFirstInOrder(callback) {
     const { left, right } = this;
     if (left) {
@@ -123,6 +112,17 @@ class BinarySearchTree {
       right.traverseDepthFirstPostOrder(callback);
     }
     callback(this);
+  }
+
+  traverseDepthFirstPreOrder(callback) {
+    const { left, right } = this;
+    callback(this);
+    if (left) {
+      left.traverseDepthFirstPreOrder(callback);
+    }
+    if (right) {
+      right.traverseDepthFirstPreOrder(callback);
+    }
   }
 }
 
