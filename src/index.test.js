@@ -244,41 +244,62 @@ describe('.delete()', () => {
 });
 
 describe('.insert()', () => {
-  let binarySearchTree;
+  describe('Inserts a value using the default comparator', () => {
+    let binarySearchTree;
 
-  beforeAll(() => {
-    binarySearchTree = new BinarySearchTree(10);
-    binarySearchTree.insert(5);
-    binarySearchTree.insert(3);
-    binarySearchTree.insert(7);
-    binarySearchTree.insert(15);
-    binarySearchTree.insert(13);
-    binarySearchTree.insert(17);
-    binarySearchTree.insert(17);
+    beforeAll(() => {
+      binarySearchTree = new BinarySearchTree(10);
+      binarySearchTree.insert(5);
+      binarySearchTree.insert(3);
+      binarySearchTree.insert(7);
+      binarySearchTree.insert(15);
+      binarySearchTree.insert(13);
+      binarySearchTree.insert(17);
+      binarySearchTree.insert(17);
+    });
+
+    test('Inserts the first node to the left', () => {
+      expect(binarySearchTree.left.value).toBe(5);
+    });
+
+    test('Inserts the first node to the right', () => {
+      expect(binarySearchTree.right.value).toBe(15);
+    });
+
+    test('Inserts the left child of the left node', () => {
+      expect(binarySearchTree.left.left.value).toBe(3);
+    });
+
+    test('Inserts the right child of the left node', () => {
+      expect(binarySearchTree.left.right.value).toBe(7);
+    });
+
+    test('Inserts the left child of the right node', () => {
+      expect(binarySearchTree.right.left.value).toBe(13);
+    });
+
+    test('Inserts the right child of the right node', () => {
+      expect(binarySearchTree.right.right.value).toBe(17);
+    });
   });
 
-  test('Inserts the first node to the left', () => {
-    expect(binarySearchTree.left.value).toBe(5);
-  });
+  describe('Inserts a value given a custom comparator', () => {
+    let binarySearchTree;
 
-  test('Inserts the first node to the right', () => {
-    expect(binarySearchTree.right.value).toBe(15);
-  });
+    beforeAll(() => {
+      const comparator = value => (value.age > 10 ? 1 : -1);
+      binarySearchTree = new BinarySearchTree({ age: 10 });
+      binarySearchTree.insert({ age: 5 }, comparator);
+      binarySearchTree.insert({ age: 15 }, comparator);
+    });
 
-  test('Inserts the left child of the left node', () => {
-    expect(binarySearchTree.left.left.value).toBe(3);
-  });
+    test('Inserts the correct node to the left', () => {
+      expect(binarySearchTree.left.value).toEqual({ age: 5 });
+    });
 
-  test('Inserts the right child of the left node', () => {
-    expect(binarySearchTree.left.right.value).toBe(7);
-  });
-
-  test('Inserts the left child of the right node', () => {
-    expect(binarySearchTree.right.left.value).toBe(13);
-  });
-
-  test('Inserts the right child of the right node', () => {
-    expect(binarySearchTree.right.right.value).toBe(17);
+    test('Inserts the correct node to the right', () => {
+      expect(binarySearchTree.right.value).toEqual({ age: 15 });
+    });
   });
 });
 

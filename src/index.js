@@ -46,8 +46,10 @@ class BinarySearchTree {
     return true;
   }
 
-  insert(value, comparator = defaultComparator) {
-    const difference = comparator(this.value, value);
+  insert(value, comparator) {
+    const difference = isFunction(comparator)
+      ? comparator(value)
+      : defaultComparator(this.value, value);
     if (difference === 1) {
       if (this.right) {
         this.right.insert(value, comparator);
