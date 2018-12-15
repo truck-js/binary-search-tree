@@ -23,17 +23,17 @@ class BinarySearchTree {
     return this.left ? this.left.minimum : this.value;
   }
 
-  delete(value, comparator = defaultComparator, parent = undefined) {
-    const difference = comparator(this.value, value);
+  delete(value, parent = undefined) {
+    const difference = isFunction(value) ? value(this.value) : defaultComparator(this.value, value);
     if (difference === 1) {
-      return this.right ? this.right.delete(value, comparator, this) : false;
+      return this.right ? this.right.delete(value, this) : false;
     }
     if (difference === -1) {
-      return this.left ? this.left.delete(value, comparator, this) : false;
+      return this.left ? this.left.delete(value, this) : false;
     }
     if (this.left && this.right) {
       this.value = this.right.minimum;
-      return this.right.delete(this.value, comparator, this);
+      return this.right.delete(this.value, this);
     }
     if (parent.left === this) {
       // eslint-disable-next-line no-param-reassign

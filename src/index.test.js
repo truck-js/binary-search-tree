@@ -46,16 +46,16 @@ describe('.delete()', () => {
     let result;
 
     beforeAll(() => {
-      const comparator = (existing, value) => {
-        if (value.value > existing.value) {
+      const comparator = (value) => {
+        if (value < 15) {
           return 1;
         }
-        return value.value < existing.value ? -1 : 0;
+        return value.value > 15 ? -1 : 0;
       };
       binarySearchTree = new BinarySearchTree(10);
-      binarySearchTree.insert({ value: 5 });
-      binarySearchTree.insert({ value: 15 });
-      result = binarySearchTree.delete({ value: 15 }, undefined, comparator);
+      binarySearchTree.insert(5);
+      binarySearchTree.insert(15);
+      result = binarySearchTree.delete(comparator);
     });
 
     test('Deletes the node on the right', () => {
