@@ -282,6 +282,104 @@ describe('.insert()', () => {
   });
 });
 
+
+describe('.search()', () => {
+  describe('Returns \'undefined\' when the value is too small', () => {
+    let binarySearchTree;
+    let result;
+
+    beforeAll(() => {
+      binarySearchTree = new BinarySearchTree(10);
+      binarySearchTree.insert(5);
+      binarySearchTree.insert(3);
+      binarySearchTree.insert(7);
+      binarySearchTree.insert(15);
+      binarySearchTree.insert(13);
+      binarySearchTree.insert(17);
+      result = binarySearchTree.search(1);
+    });
+
+    test('Returns \'undefined\'', () => {
+      expect(result).toBe(undefined);
+    });
+  });
+
+  describe('Returns \'undefined\' when the value is too large', () => {
+    let binarySearchTree;
+    let result;
+
+    beforeAll(() => {
+      binarySearchTree = new BinarySearchTree(10);
+      binarySearchTree.insert(5);
+      binarySearchTree.insert(3);
+      binarySearchTree.insert(7);
+      binarySearchTree.insert(15);
+      binarySearchTree.insert(13);
+      binarySearchTree.insert(17);
+      result = binarySearchTree.search(1000);
+    });
+
+    test('Returns \'undefined\'', () => {
+      expect(result).toBe(undefined);
+    });
+  });
+
+  describe('Returns the sub-tree of the value that is found', () => {
+    let binarySearchTree;
+    let result;
+
+    beforeAll(() => {
+      binarySearchTree = new BinarySearchTree(10);
+      binarySearchTree.insert(5);
+      binarySearchTree.insert(3);
+      binarySearchTree.insert(7);
+      binarySearchTree.insert(15);
+      binarySearchTree.insert(13);
+      binarySearchTree.insert(17);
+      result = binarySearchTree.search(5);
+    });
+
+    test('Returns the entire sub-tree', () => {
+      expect(result.value).toBe(5);
+    });
+
+    test('Includes the left node', () => {
+      expect(result.left.value).toBe(3);
+    });
+
+    test('Includes the right node', () => {
+      expect(result.right.value).toBe(7);
+    });
+  });
+
+  describe('Searches for a value using a custom comparator', () => {
+    let binarySearchTree;
+    let result;
+
+    beforeAll(() => {
+      const comparator = (value) => {
+        if (value > 3) {
+          return -1;
+        }
+        return value < 3 ? 1 : 0;
+      };
+      binarySearchTree = new BinarySearchTree(10);
+      binarySearchTree.insert(5);
+      binarySearchTree.insert(3);
+      binarySearchTree.insert(7);
+      binarySearchTree.insert(15);
+      binarySearchTree.insert(13);
+      binarySearchTree.insert(17);
+      result = binarySearchTree.search(comparator);
+    });
+
+    test('Returns the sub-tree', () => {
+      expect(result.value).toBe(3);
+    });
+  });
+});
+
+
 describe('.traverseBreadthFirst()', () => {
   const results = [];
   const callback = node => results.push(node.value);

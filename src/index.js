@@ -1,5 +1,5 @@
 import Queue from '@truck/queue';
-// import isFunction from 'lodash.isfunction';
+import isFunction from 'lodash.isfunction';
 
 const defaultComparator = (existing, value) => {
   if (value > existing) {
@@ -61,6 +61,17 @@ class BinarySearchTree {
         this.left = new BinarySearchTree(value);
       }
     }
+  }
+
+  search(value) {
+    const difference = isFunction(value) ? value(this.value) : defaultComparator(this.value, value);
+    if (difference === 1) {
+      return this.right ? this.right.search(value) : undefined;
+    }
+    if (difference === -1) {
+      return this.left ? this.left.search(value) : undefined;
+    }
+    return this;
   }
 
   traverseBreadthFirst(callback) {
