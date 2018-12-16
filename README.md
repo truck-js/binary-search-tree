@@ -103,6 +103,8 @@ The value inserted into the _Binary Search Tree_.
 A _Binary Search Tree_ is a standard class which can be instantiated with the `new` keyword:
 
 ```js
+import BinarySearchTree from '@truck/binary-search-tree';
+
 const binarySearchTree = new BinarySearchTree(10);
 // insert some values
 binarySearchTree.insert(5);
