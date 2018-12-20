@@ -188,6 +188,23 @@ Unit testing can be run in isolation through the command:
 $ docker-compose run --rm app npm run test:scripts
 ```
 
+### Benchmarking
+
+Although not part of the CI test suite, a _Benchmark_ test is available to see how _Queue_ performs
+against a standard array with 1,000,000 items.
+
+The _Benchmark_ test can be run with the following command:
+
+```sh
+$ docker-compose run --rm app npm run test:benchmark
+```
+
+Optionally, the amount of items can be set by passing in the amount to the script:
+
+```sh
+$ docker-compose run --rm app npm run test:benchmark 65535
+```
+
 ## Contributing
 
 Contributions are always welcome, just submit a PR to get the conversation going. Please make sure
